@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Players stats:</h1>
+<div class="text-center">
+    <a href="{% url 'club_stats' %}" class="btn btn-outline-dark me-2">Stats by clubs</a>
+    <a href="{% url 'player_stats' %}" class="btn btn-dark me-2">Stats by players</a>
+    <a href="{% url 'players_above_average' %}" class="btn btn-outline-dark me-2">Players with above average stats</a>
+</div>
+<br>
+<table class="table">
+    <thead>
+        <tr>
+            <td>
+                Club
+            </td>
+            <td>
+                Player
+            </td>
+            <td>
+                Average scored (goals)
+            </td>
+            <td>
+                Average skipped (goals)
+            </td>
+        </tr>
+    </thead>
+    {% for player in players_stats %}
+    <tbody>
+        <tr>
+            <td>
+                <a href="{% url 'club_info' player.id %}"
+                    class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{ player.club }}</a>
+            </td>
+            <td>
+                <a href="{% url 'player_info' player.player_id %}"
+                    class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{ player.full_name }}</a>
+            </td>
+            <td>
+                {{ player.avg_scored }}
+            </td>
+            <td>
+                {{ player.avg_skipped }}
+            </td>
+        </tr>
+    </tbody>
+    {% endfor %}
+</table>
+{% endblock %}

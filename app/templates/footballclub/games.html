@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Games ({{ count }} records):</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Game Level
+            </th>
+            <th>
+                Goals skipped
+            </th>
+            <th>
+                Club
+            </th>
+            <th>
+                Enemy
+            </th>
+            <th>
+                Country of the game
+            </th>
+            <th>
+                Date of the game
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for game in games %}
+        <tr>
+            <td>
+                <a href="{% url 'game_info' game.id %}"
+                    class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+                    {{ game.id }}
+                </a>
+            </td>
+            <td>
+                <a href="{% url 'gamelevels' 1 %}#{{ game.gamelevel_id.id }}"
+                    class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+                    {{ game.gamelevel_id.game_level }}
+                </a>
+            </td>
+            <td>
+                {{ game.goals_skipped }}
+            </td>
+            <td>
+                <a href="{% url 'club_info' game.club_id.id %}"
+                    class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+                    {{ game.club_id.club }}
+                </a>
+            </td>
+            <td>
+                <a href="{% url 'enemy_teams' 1 %}#{{ game.enemyteam_id.id }}"
+                    class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+                    {{ game.enemyteam_id.team_name }}
+                </a>
+            </td>
+            <td>
+                <a href="{% url 'countries' 1 %}#{{ game.country_id.id }}"
+                    class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+                    {{ game.country_id.country }}
+                </a>
+            </td>
+            <td>
+                {{ game.game_date }}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    {% endblock %}

@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Clubs ({{ count }} records):</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Placement city
+            </th>
+            <th>
+                Club`s name
+            </th>
+            <th>
+                Training base
+            </th>
+            <th>
+                Create year
+            </th>
+            <th>
+                Manager`s phone
+            </th>
+            <th>
+                League
+            </th>
+            <th>
+                Manager`s last name
+            </th>
+            <th>
+                Manager`s first name
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for club in clubs %}
+        <tr>
+            <td>
+                {{ club.id }}
+            </td>
+            <td>
+                <a href="{% url 'cities' 1 %}#{{ club.city_id.id }}"
+                    class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{ club.city_id.city }}</a>
+            </td>
+            <td>
+                <a href="{% url 'club_info' club.id %}"
+                    class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{ club.club }}</a>
+            </td>
+            <td>
+                {{ club.base }}
+            </td>
+            <td>
+                {{ club.create_year }}
+            </td>
+            <td>
+                {{ club.manager_phone }}
+            </td>
+            <td>
+                <a href="{% url 'leagues' 1 %}#{{ club.league_id.id }}"
+                    class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{ club.league_id.league }}</a>
+            </td>
+            <td>
+                {{ club.manager_last_name }}
+            </td>
+            <td>
+                {{ club.manager_first_name }}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

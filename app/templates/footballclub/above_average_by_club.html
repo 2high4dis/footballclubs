@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Players of {{ club }} with above average statistics. {{ count }} records:</h1>
+<div class="text-center">
+    <a href="{% url 'club_stats' %}" class="btn btn-outline-dark me-2">Stats by clubs</a>
+    <a href="{% url 'player_stats' %}" class="btn btn-outline-dark me-2">Stats by players</a>
+    <a href="{% url 'players_above_average' %}" class="btn btn-dark me-2">Players with above average stats</a>
+    <br>
+    <br>
+    <a href="{% url 'players_above_average' %}" class="btn btn-outline-dark me-2">General</a>
+    <a href="{% url 'above_average_by_club' %}" class="btn btn-dark me-2">By club</a>
+</div>
+<div class="card my-2">
+    <form action="{% url 'above_average_by_club' %}" method="post">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+            <span class="input-group-text">Club`s name</span>
+            <input class="form-control" type="text" name="club" placeholder="Enter club`s name..." value="{{ club }}">
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>
+<br>
+<table class="table">
+    <thead>
+        <tr>
+            <td>
+                Player
+            </td>
+            <td>
+                Club
+            </td>
+            <td>
+                Goals sum
+            </td>
+        </tr>
+    </thead>
+    {% for player in players %}
+    <tbody>
+        <tr>
+            <td>
+                <a href="{% url 'player_info' player.id %}"
+                    class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{ player.full_name }}</a>
+            </td>
+            <td>
+                {{ player.club }}
+            </td>
+            <td>
+                {{ player.goals_sum }}
+            </td>
+        </tr>
+    </tbody>
+    {% endfor %}
+</table>
+{% endblock %}

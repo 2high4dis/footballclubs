@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Clubs by cities. ({{ count }} records):</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                City
+            </th>
+            <th>
+                Club
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for city in cities %}
+        <tr>
+            <td>
+                <a href="{% url 'cities' 1 %}#{{ city.id }}"
+                    class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{ city.city }}</a>
+            </td>
+            <td>
+                {% if city.club %}
+                <a href="{% url 'club_info' city.club_id %}"
+                    class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{ city.club }}</a>
+                {% else %}
+                <b>There are no clubs in this city.</b>
+                {% endif %}
+            </td>
+
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

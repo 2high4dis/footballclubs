@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card">
+    <div class="text-center">
+        {% if player.photo %}
+        <img src="{{ player.photo.url }}" class="rounded" alt="#" width="200" height="200">
+        {% endif %}
+        <div class="card-body">
+            <h1>{{ player.full_name }}</h1>
+            <h3>Position: <a href="{% url 'positions' player.position_id.id %}#{{ player.position_id.id }}"
+                    class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{ player.position_id.position }}</a>
+            </h3>
+            <h3>Birth date: {{ player.birth_date }}</h3>
+            <h3>Club: <a href="{% url 'club_info' player.club_id.id %}"
+                    class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{ player.club_id.club }}</a>
+            </h3>
+            <h3>Year of joining the club: {{ player.year_fact }} г.</h3>
+            <h3>Contract cost: {{ player.cost }} $</h3>
+        </div>
+        {% if user.is_authenticated %}
+        <div>
+            <a href="{% url 'players_update' player.id %}" class="btn btn-outline-primary me-2">Edit</a>
+            <a href="{% url 'players_delete' player.id %}" class="btn btn-outline-danger me-2">Delete</a>
+            </form>
+
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<h4>Attended in games: </h4>
+
+<div class="list-group">
+    {% for game in player.gameattend_set.all %}
+    <li class="list-group-item list-group-item-action">
+        <a href="{% url 'game_info' game.game_id.id %}"
+            class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+            aria-current="true">{{ game.get_info }}. Was on the
+            {% if game.attend %}field{% else %}bench{% endif %}.</a>
+        {% if user.is_authenticated %}
+        <div class="text-center">
+            <a href="{% url 'game_attended_update' game.id %}" class="btn btn-outline-primary md-2">Edit</a>
+            <a href="{% url 'game_attended_delete' game.id %}" class="btn btn-outline-danger md-2">Delete</a>
+        </div>
+    </li>
+    {% endif %}
+    {% endfor %}
+</div>
+
+{% endblock %}

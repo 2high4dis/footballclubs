@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Enemies by countres. ({{ count }} records):</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Country
+            </th>
+            <th>
+                Enemy team`s name
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for country in countries %}
+        <tr>
+            <td>
+                <a href="{% url 'countries' 1 %}#{{ country.id }}"
+                    class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{ country.country }}</a>
+            </td>
+            <td>
+                {% if country.team_name %}
+                <a href="{% url 'enemy_teams' 1 %}#{{ country.enemyteam_id }}"
+                    class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{ country.team_name }}</a>
+                {% else %}
+                <b>There are no enemy teams in this country.</b>
+                {% endif %}
+            </td>
+
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

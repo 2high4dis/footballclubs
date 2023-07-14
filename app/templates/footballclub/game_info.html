@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card">
+    <div class="text-center">
+        <h1>
+            <a href="{% url 'club_info' game.club_id.id %}"
+                class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{ game.club_id.club }}</a>
+            vs.
+            <a href="{% url 'enemy_teams' 1 %}#{{ game.enemyteam_id.id }}"
+                class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{ game.enemyteam_id.team_name}}</a>.
+            <a href="{% url 'countries' 1 %}#{{ game.country_id.id }}"
+                class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{ game.country_id.country }}</a>
+            {{ game.game_date }}
+        </h1>
+        <h1>
+            Result: {{ game.get_all_goals }} : {{ game.goals_skipped }}
+        </h1>
+        <h3>Game level: <a href="{% url 'gamelevels' 1 %}#{{ game.gamelevel_id.id }}"
+                class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{ game.gamelevel_id.game_level }}</a>
+        </h3>
+        {% if user.is_authenticated %}
+        <div>
+            <a href="{% url 'games_update' game.id %}" class="btn btn-outline-primary me-2">Edit</a>
+            <a href="{% url 'games_delete' game.id %}" class="btn btn-outline-danger me-2">Delete</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+
+<h4>Attended: </h4>
+
+<div class="list-group">
+    {% for attended in game.gameattend_set.all %}
+
+    <a href="{% url 'player_info' attended.player_id.id %}" class="list-group-item list-group-item-action"
+        aria-current="true">{{ attended.player_id.get_info }}. Scored: {{ attended.goals_scored }} time(-s). Was on the
+        {% if attended.attend %}field{% else %}bench{% endif %}.</a></li>
+
+    {% endfor %}
+</div>
+
+{% endblock %}

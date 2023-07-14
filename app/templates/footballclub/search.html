@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Search results:</h1>
+<div class="list-group">
+    {% for key, objects in object_list.items %}
+    {% if objects %}
+    {% for object in objects %}
+    <a href="{% url key object.id %}" class="list-group-item list-group-item-action"
+        aria-current="true">{{ object.get_info }}</a>
+    {% endfor %}
+    {% else %}
+    No results were found for this search.
+    {% endif %}
+    {% endfor %}
+
+</div>
+
+{% endblock %}

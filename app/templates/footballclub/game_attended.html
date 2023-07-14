@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Games attends ({{ count }} records):</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Player
+            </th>
+            <th>
+                Game
+            </th>
+            <th>
+                Goals scored
+            </th>
+            <th>
+                Attended?
+            </th>
+            <th>
+                Salary ($)
+            </th>
+            {% if user.is_authenticated %}
+            <th class="text-center">
+                Edit record
+            </th>
+            {% endif %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for game_attend in game_attended %}
+        <tr>
+            <td>
+                {{ game_attend.id }}
+            </td>
+            <td>
+                {{ game_attend.player_id.full_name }}
+            </td>
+            <td>
+                {{ game_attend.game_id.get_info }}
+            </td>
+            <td>
+                {{ game_attend.goals_scored }}
+            </td>
+            <td>
+                <input class="form-check-input" type="checkbox" disabled {% if game_attend.attend %} checked
+                    {% endif %}>
+            </td>
+            <td>
+                {{ game_attend.salary }}
+            </td>
+            {% if user.is_authenticated %}
+            <td class="text-center">
+                <a href="{% url 'game_attended_update' game_attend.id %}"
+                    class="btn btn-outline-primary md-2">Edit</a><br>
+                <a href="{% url 'game_attended_delete' game_attend.id %}" class="btn btn-outline-danger md-2">Delete</a>
+            </td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+    {% endblock %}

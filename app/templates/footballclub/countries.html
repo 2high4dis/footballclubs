@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Countries list ({{ count }} records):</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Country
+            </th>
+            {% if user.is_authenticated %}
+            <th class="text-center">
+                Edit record
+            </th>
+            {% endif %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for country in countries %}
+        <tr>
+            <td id="{{ country.id }}">
+                {{ country.id }}
+            </td>
+            <td>
+                {{ country.country }}
+            </td>
+            {% if user.is_authenticated %}
+            <td class="text-center">
+                <a href="{% url 'countries_update' country.id %}" class="btn btn-outline-primary md-2">Edit</a><br>
+                <a href="{% url 'countries_delete' country.id %}" class="btn btn-outline-danger md-2">Delete</a>
+            </td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

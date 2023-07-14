@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Enemies ({{ count }} records):</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Placement country
+            </th>
+            <th>
+                Team name
+            </th>
+            <th>
+                Coach last name
+            </th>
+            <th>
+                Coach first name
+            </th>
+            {% if user.is_authenticated %}
+            <th class="text-center">
+                Edit record
+            </th>
+            {% endif %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for enemy_team in enemy_teams %}
+        <tr>
+            <td id="{{ enemy_team.id }}">
+                {{ enemy_team.id }}
+            </td>
+            <td>
+                <a href="{% url 'countries' 1 %}#{{ enemy_team.country_id.id }}"
+                    class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{ enemy_team.country_id.country }}</a>
+            </td>
+            <td>
+                {{ enemy_team.team_name }}
+            </td>
+            <td>
+                {{ enemy_team.coach_last_name }}
+            </td>
+            <td>
+                {{ enemy_team.coach_first_name }}
+            </td>
+            {% if user.is_authenticated %}
+            <td class="text-center">
+                <a href="{% url 'enemy_teams_update' enemy_team.id %}" class="btn btn-outline-primary md-2">Edit</a><br>
+                <a href="{% url 'enemy_teams_delete' enemy_team.id %}" class="btn btn-outline-danger md-2">Delete</a>
+            </td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

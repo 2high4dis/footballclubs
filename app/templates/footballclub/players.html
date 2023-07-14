@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Players ({{ count }} records):</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Last name
+            </th>
+            <th>
+                First name
+            </th>
+            <th>
+                Position
+            </th>
+            <th>
+                Birth date
+            </th>
+            <th>
+                Club
+            </th>
+            <th>
+                Year of joining the club
+            </th>
+            <th>
+                Photo
+            </th>
+            <th>
+                Contract cost ($)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for player in players %}
+        <tr>
+            <td>
+                {{ player.id }}
+            </td>
+            <td>
+                <a href="{% url 'player_info' player.id %}"
+                    class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+                    {{ player.last_name }}
+                </a>
+            </td>
+            <td>
+                <a href="{% url 'player_info' player.id %}"
+                    class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+                    {{ player.first_name }}
+                </a>
+            </td>
+            <td>
+                <a href="{% url 'positions' player.position_id.id %}#{{ player.position_id.id }}"
+                    class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{ player.position_id.position }}</a>
+            </td>
+            <td>
+                {{ player.birth_date }}
+            </td>
+            <td>
+                <a href="{% url 'club_info' player.club_id.id %}"
+                    class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+                    {{ player.club_id.club }}
+                </a>
+            </td>
+            <td>
+                {{ player.year_fact }}
+            </td>
+            <td>
+                {% if player.photo %}
+                <img src="{{ player.photo.url }}" class="rounded" alt="#" width="50" height="50">
+                {% else %}
+                No photo.
+                {% endif %}
+            </td>
+            <td>
+                {{ player.cost }}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    {% endblock %}

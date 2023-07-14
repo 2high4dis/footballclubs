@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container">
+    <h2>About account:</h2>
+    <div class="content-section">
+        <div class="media">
+            <div class="media-body">
+                <h2 class="account-heading">Username: {{ user.username }}</h2>
+                <p class="text-secondary">Email: {{ user.email }}</p>
+                <a href="{% url 'logout' %}" class="btn btn-outline-danger me-2">Log out</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

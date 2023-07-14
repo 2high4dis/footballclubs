@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>What record do you want to create??</h1>
+
+<div class="list-group">
+    {% for key, value in items.items %}
+
+    <a href="{% url key %}" class="list-group-item list-group-item-action" aria-current="true">{{ value }}</a>
+
+    {% endfor %}
+</div>
+
+{% endblock %}

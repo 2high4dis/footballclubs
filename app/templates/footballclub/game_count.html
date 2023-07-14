@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Slice of the {% if club %}{{ club }}{% else %}FC Shakhtar{% endif %} number of games.<br>
+    From {% if start %}{{ start }}{% else %}Jan. 1, 2021{% endif %} to
+    {% if end %}{{ end }}{% else %}Dec. 31, 2021{% endif %}:</h1>
+<div class="text-center">
+    <a href="{% url 'game_count' %}" class="btn btn-dark me-2">Games Count Slice</a>
+    <a href="{% url 'finances' %}" class="btn btn-outline-dark me-2">Finances Slice</a>
+</div>
+<br>
+<div class="card">
+    <form action="{% url 'game_count' %}" method="post">
+        {% csrf_token %}
+        <legend>Enter data for slice:</legend>
+        <div class="input-group mb-3">
+            <span class="input-group-text">Start</span>
+            <input class="form-control" type="date" name="start" placeholder="Enter slice`s start date..."
+                value="{{ start }}">
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text">End</span>
+            <input class="form-control" type="date" name="end" placeholder="Enter slice`s end date..."
+                value="{{ end }}">
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text">Club name</span>
+            <input class="form-control" type="text" name="club" placeholder="Enter club`s name..." value="{{ club }}"
+                required>
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>
+<br>
+<table class="table">
+    <thead>
+        <tr>
+            <td>
+                Club
+            </td>
+            <td>
+                Cames count
+            </td>
+        </tr>
+    </thead>
+    {% for club in game_count %}
+    <tbody>
+        <tr>
+            <td>
+                <a href="{% url 'club_info' club.id %}"
+                    class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{ club.club }}</a>
+            </td>
+            <td>
+                {{ club.game_count }}
+            </td>
+        </tr>
+    </tbody>
+    {% endfor %}
+</table>
+{% endblock %}

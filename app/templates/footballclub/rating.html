@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Top clubs:</h1>
+<div class="text-center">
+    <a href="{% url 'club_rating' %}" class="btn active btn-outline-dark me-2">Top clubs</a>
+    <a href="{% url 'player_rating' %}" class="btn btn-outline-dark me-2">Top players by clubs</a>
+</div>
+<br>
+<table class="table">
+    <thead>
+        <tr>
+            <td>
+                Clubs
+            </td>
+            <td>
+                Goals scored
+            </td>
+        </tr>
+    </thead>
+    {% for club in clubs_rating %}
+    <tbody>
+        <tr>
+            <td>
+                <a href="{% url 'club_info' club.id %}"
+                    class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{ club.club }}</a>
+            </td>
+            <td>
+                {{ club.goals_sum }}
+            </td>
+        </tr>
+    </tbody>
+    {% endfor %}
+</table>
+
+{% endblock %}

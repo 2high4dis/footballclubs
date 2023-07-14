@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card">
+    <div class="text-center">
+        <h1>FC {{ club.club }}</h1>
+        <h3>Placement city: <a href="{% url 'cities' 1 %}#{{ club.city_id.id }}"
+                class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{ club.city_id.city }}</a>
+        </h3>
+        <h3>Training base: {{ club.base }}</h3>
+        <h3>Create year: {{ club.create_year }} г.</h3>
+        <h3>League: <a href="{% url 'leagues' 1 %}#{{ club.league_id.id }}"
+                class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{ club.league_id.league }}</a>
+        </h3>
+        <h3>Club`s manager: {{ club.get_manager_info }}</h3>
+        <h3>Manager`s phone: {{ club.manager_phone }}</h3>
+        {% if user.is_authenticated %}
+        <div>
+            <a href="{% url 'clubs_update' club.id %}" class="btn btn-outline-primary me-2">Edit</a>
+            <a href="{% url 'clubs_delete' club.id %}" class="btn btn-outline-danger me-2">Delete</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<h4>Club`s players: </h4>
+
+<div class="list-group">
+    {% for player in club.player_set.all %}
+
+    <a href="{% url 'player_info' player.id %}" class="list-group-item list-group-item-action"
+        aria-current="true">{{ player.get_info }}</a>
+
+    {% endfor %}
+</div>
+
+<h4>Club`s games: </h4>
+
+<div class="list-group">
+    {% for game in club.game_set.all %}
+
+    <a href="{% url 'game_info' game.id %}" class="list-group-item list-group-item-action"
+        aria-current="true">{{ game.get_info }}</a>
+    {% endfor %}
+</div>
+
+{% endblock %}
